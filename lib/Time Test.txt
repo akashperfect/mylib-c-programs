@@ -1,0 +1,9 @@
+Heap sort time : 0.491000
+Merge sort time : 0.394000
+Quick sort time : 0.315000
+Insertion sort time : 1222.409000
+Counting sort time : 0.028000
+Bucket sort time : 0.012000
+Quick sort time : 13.073000
+Quick sort time : 15.678000
+Quick sort time : 15.584000

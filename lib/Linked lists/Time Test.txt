@@ -1,0 +1,8 @@
+Linked List Quick Sort sort time : 0.294000
+Number of Inputs : 1000000
+Linked List Quick Sort sort time : 9.687000
+Number of Inputs : 10000000
+Linked List Quick Sort sort time : 10.889000
+Number of Inputs : 10000000
+Linked List Quick Sort sort time : 10.874000
+Number of Inputs : 10000000
