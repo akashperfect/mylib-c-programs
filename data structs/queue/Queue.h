@@ -1,8 +1,8 @@
 #ifndef QUEUE_H_INCLUDED
 #define QUEUE_H_INCLUDED
-#include<stdio.h>
-#include<stdlib.h>
-#include<string.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include "Queueadt.h"
 
 //enqueue,dequeue,front
@@ -16,24 +16,19 @@ queue CreateQueue()
     queue q;
     q.size = 0;
     q.front = NULL;
+    q.rear = NULL;
     return q;
 }
 
-queue Enqueue(queue q, NODE n)
+queue Enqueue(queue q, void * data)
 {
-    NODE curr,prev;
-    curr=prev=q.front;
-    if(q.front==NULL)
-    q.front = n;
+    NODE n = CreateNode(data);
+    if(q.front == NULL)
+        q.front = q.rear = n;
     else
     {
-        while(curr!=NULL)
-        {
-            prev = curr;
-            curr = curr->next;
-        }
-        prev->next = n;
-
+        q.rear->next = n;
+        q.rear = n;
     }
     q.size++;
     return q;
@@ -41,15 +36,18 @@ queue Enqueue(queue q, NODE n)
 
 queue Dequeue(queue q)
 {
+    if(q.size <= 0)
+        return q; 
     NODE del = q.front;
     q.front = q.front->next;
     free(del);
+    q.size--;
     return q;
 }
 
-NODE QueueTop(queue q)
+void * QueueTop(queue q)
 {
-    return q.front;
+    return GetData(q.front);
 }
 
 void PrintQueue(queue q)

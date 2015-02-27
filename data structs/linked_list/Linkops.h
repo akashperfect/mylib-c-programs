@@ -7,13 +7,13 @@ extern NODE CreateNode();
 extern NODE InsertValue(NODE n, int val);
 extern int Value(NODE n);
 
-NODE CreateNode()
+NODE CreateNode(void * data)
 {
     NODE n;
     n = (NODE)malloc(sizeof(struct node));
-    n->s.num=0;
-    n->s.st = (char*)malloc(100*sizeof(char));
-    //n->s.w = 0;
+    n->s.data = data;
+    // n->s.st = (char*)malloc(100*sizeof(char));
+    // n->s.w = 0;
     n->next=NULL;
     n->prev=NULL;
     return n;
@@ -23,6 +23,11 @@ NODE InsertValue(NODE n, int val)
 {
     n->s.num = val;
     return n;
+}
+
+void * GetData(NODE n)
+{
+    return n->s.data;
 }
 
 NODE InsertValueS(NODE n, SAT e)
@@ -44,8 +49,7 @@ List InsertList(List L, int n)
 {
     NODE v,curr,pre;
     pre = curr = L.head;
-    v = CreateNode();
-    v->s.num = n;
+    v = CreateNode(&n);
     if(L.head==NULL)
     L.head = v;
     else if(curr->s.num>n)

@@ -1,7 +1,7 @@
 #ifndef TREEOPS_H_INCLUDED
 #define TREEOPS_H_INCLUDED
 #include "Tree.h"
-#include "Queue.h"
+#include "../queue/Queue.h"
 
 NODET CreateNodeTree(int val)
 {
@@ -28,12 +28,35 @@ NODET InsertBST(NODET root, int val)
 NODET GenerateTree(int n)
 {
     int i;
-    NODET root=NULL;
+    NODET root = NULL;
     for(i=0;i<n;i++)
     {
         root = InsertBST(root,rand());
     }
     return root;
+}
+
+/* 
+the above function returns a tree like this
+          5  
+      3       8
+   2    4  6     9
+1             7     10
+
+*/
+NODET CustomTree()
+{
+    NODET root = NULL;
+    root = InsertBST(root,5);
+    root = InsertBST(root,3);
+    root = InsertBST(root,8);
+    root = InsertBST(root,2);
+    root = InsertBST(root,4);
+    root = InsertBST(root,1);
+    root = InsertBST(root,6);
+    root = InsertBST(root,7);
+    root = InsertBST(root,9);
+    root = InsertBST(root,10);
 }
 
 void PrintTree(NODET root)
@@ -44,6 +67,26 @@ void PrintTree(NODET root)
     PrintTree(root->right);
 
 }
+
+void Postorder(NODET root)
+{
+    if(root == NULL )return ;
+    Postorder(root->left);
+    Postorder(root->right);
+    printf("%d ",root->data);
+
+}
+
+void Preorder(NODET root)
+{
+    if(root == NULL )return ;
+    printf("%d ",root->data);
+    PrintTree(root->left);
+    PrintTree(root->right);
+
+}
+
+
 
 int MaxDepth(NODET root)
 {
@@ -56,27 +99,19 @@ int MaxDepth(NODET root)
 void LevelOrder(NODET root)
 {
     queue q = CreateQueue();
-    q = Enqueue(q,root);
-    int count=1,c=0,set=0,leveln=-1,level=1;
-    while(q.front!=NULL)
+    q = Enqueue(q , &root);
+    while(q.front != NULL)
     {
-        c = 0;
-        while(count--)
-        {
-            NODET node = QueueTop(q);
-            q = Dequeue(q);
-            printf("%d ",node->data);
-            if(node->left!=NULL){
-                q = Enqueue(q,node->left);
-                c++;}
-            if(node->right!=NULL){
-                q = Enqueue(q,node->right);
-                c++;}
+        NODET node = *(NODET*) QueueTop(q);
+        q = Dequeue(q);
+        printf("%d ",node->data);
+        if(node->left!=NULL){
+            q = Enqueue(q , &node->left);
         }
-        printf("\n");
-        count=c;
+        if(node->right!=NULL){
+            q = Enqueue(q , &node->right);
+        }
     }
-
 }
 
 #endif // TREEOPS_H_INCLUDED

@@ -1,17 +1,18 @@
 #ifndef LINK_H_INCLUDED
 #define LINK_H_INCLUDED
-#include "MaxMin.h"
+#include "../../lib/MaxMin.h"
 
 
 typedef struct {
     int num; // satellite data any number of vars can be added
+    void* data;
     char* st;
     //int w; //added for weighted graphs where w stores the path weight from linked node to this node
 }SAT;
 
 typedef struct node* NODE;
 
-typedef struct node{
+struct node{
     SAT s;
     NODE next;
     NODE prev;
