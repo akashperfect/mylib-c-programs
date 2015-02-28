@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "Treeops.h"
 
-int main(char argc, char ** argv)
+int main(int argc, char ** argv)
 {
 	NODET root;
 	root = CustomTree();

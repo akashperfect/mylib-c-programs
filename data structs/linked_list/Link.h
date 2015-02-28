@@ -3,17 +3,22 @@
 #include "../../lib/MaxMin.h"
 
 
-typedef struct {
-    int num; // satellite data any number of vars can be added
-    void* data;
-    char* st;
-    //int w; //added for weighted graphs where w stores the path weight from linked node to this node
-}SAT;
+// typedef struct {
+//     int num; // satellite data any number of vars can be added
+//     void* data;
+//     char* st;
+//     //int w; //added for weighted graphs where w stores the path weight from linked node to this node
+// }SAT;
+
+/*  Generic NODE used for linked list and queues
+    void * data holding the data structures address
+    next and prev implementing doubly linked lists
+*/
 
 typedef struct node* NODE;
 
 struct node{
-    SAT s;
+    void * data; 
     NODE next;
     NODE prev;
 };
@@ -29,7 +34,7 @@ typedef struct priorityqueue * pq;
 
 typedef struct priorityqueue
 {
-    SAT s;
+    void * data;
     int k;
 }priorityqueue;
 
