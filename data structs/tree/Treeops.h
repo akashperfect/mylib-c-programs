@@ -9,8 +9,6 @@ NODET CreateNodeTree(int val)
     n = (NODET)malloc(sizeof(struct nodet));
     n->data=val;
     n->left = NULL;
-    //n->s.st = (char*)malloc(100*sizeof(char));
-    //n->s.w = 0;
     n->right=NULL;
     return n;
 }
@@ -59,12 +57,12 @@ NODET CustomTree()
     root = InsertBST(root,10);
 }
 
-void PrintTree(NODET root)
+void Inorder(NODET root)
 {
     if(root == NULL )return ;
-    PrintTree(root->left);
+    Inorder(root->left);
     printf("%d ",root->data);
-    PrintTree(root->right);
+    Inorder(root->right);
 
 }
 
