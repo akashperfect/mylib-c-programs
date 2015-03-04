@@ -5,20 +5,8 @@ mergeoptimized(int *a, int l, int q, int r)
 {
     int * b,i,j,k;
     b = (int * )malloc((r-l+1) * sizeof(int));
-    for(i = l , j = q + 1 , k = 0 ; i <= q || j <= r ; k++)
+    for(i = l , j = q + 1 , k = 0 ; i <= q && j <= r ; k++)
     {
-        if(i > q)
-        {
-            for(j ; j <= r ; j++ , k++)
-            b[k] = a[j];
-            break;
-        }
-        else if(j > r)
-        {
-            for(i ; i <= q ; i++ , k++)
-            b[k] = a[i];
-            break;
-        }
         if(a[i] > a[j])
         {
             b[k] = a[j];
@@ -30,6 +18,16 @@ mergeoptimized(int *a, int l, int q, int r)
             i++;
         }
 
+    }
+    if(i > q)
+    {
+        for( ; j <= r ; j++ , k++)
+        b[k] = a[j];
+    }
+    else
+    {
+        for( ; i <= q ; i++ , k++)
+        b[k] = a[i];
     }
     for(i = l ; i <= r ; i++)
         a[i] = b[i-l];

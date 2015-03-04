@@ -12,7 +12,7 @@ int partition(int *a,int p,int r)   // rearranges sub-array A[p..r] in place
 {
     int x = *(a+r);                 //x acts as a pivot element around which partition takes place
     int i = p-1,j,temp;
-    for(j = p ; j <= r-1 ; j++)
+    for(j = p ; j < r ; j++)
     {
         if(*(a+j) <= x)
         {
@@ -22,10 +22,10 @@ int partition(int *a,int p,int r)   // rearranges sub-array A[p..r] in place
             *(a+i) = temp;
         }
     }
-    temp = *(a+i+1);
-    *(a+i+1) = *(a+r);
-    *(a+r) = temp;
-    return i+1;
+    i++;
+    *(a+r) = *(a+i);
+    *(a+i) = x;
+    return i;
 }
 void QuickSort(int *a,int p,int r)
 {
