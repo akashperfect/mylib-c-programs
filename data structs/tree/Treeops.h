@@ -84,7 +84,10 @@ void Preorder(NODET root)
 
 }
 
-
+int isLeaf(NODET root)
+{
+    return (root->left == NULL && root->right == NULL);
+}
 
 int MaxDepth(NODET root)
 {
@@ -124,5 +127,30 @@ int hasPathSum(NODET root, int val)
     val -= root->data;
     return hasPathSum(root->left, val) || hasPathSum(root->right, val);
 }
+
+void printPaths(NODET root, NODET* a, int i)
+{
+    if(root == NULL)
+        return;
+    if(isLeaf(root))
+    {
+        int j = 0;
+        for(; j < i ; j++)
+            printf("%d ",a[j]->data);
+        printf("%d\n", root->data);
+    }
+    a[i] = root;
+    i++;
+    printPaths(root->left, a, i);
+    printPaths(root->right, a, i);
+}
+
+void printPath(NODET root)
+{
+    NODET *a;
+    a = (NODET *)malloc((MaxDepth(root) + 1) *  sizeof(NODET));
+    printPaths(root, a, 0);
+}
+
 
 #endif // TREEOPS_H_INCLUDED

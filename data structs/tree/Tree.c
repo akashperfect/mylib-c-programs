@@ -14,4 +14,5 @@ int main(int argc, char ** argv)
 	printf("\n");
 	LevelOrder(root);
 	printf("\n%d\n", hasPathSum(root,10));
+	printPath(root);
 }

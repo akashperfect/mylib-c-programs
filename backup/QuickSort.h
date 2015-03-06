@@ -4,19 +4,18 @@ arrays are sorted by recursive calls to quicksort
 
 Pivot : Always taken as the last element in the array
 
-This is a special implementation using only higher value
-QuickSort(int *a, int r)
-instead of QuickSort(int *a, int p, int r)
+Regular implementation with 2 variables
+QuickSort(int *a,int p, int r)
 */
 
 #include <stdio.h>
 #include <stdio.h>
 
-int partition(int *a, int r)   // rearranges sub-array A[p..r] in place
+int partition(int *a,int p,int r)   // rearranges sub-array A[p..r] in place
 {
     int x = *(a+r);                 //x acts as a pivot element around which partition takes place
-    int i = -1,j,temp;
-    for(j = 0 ; j < r ; j++)
+    int i = p-1,j,temp;
+    for(j = p ; j < r ; j++)
     {
         if(*(a+j) <= x)
         {
@@ -31,13 +30,16 @@ int partition(int *a, int r)   // rearranges sub-array A[p..r] in place
     *(a+i) = x;
     return i;
 }
-void QuickSort(int *a, int r)
+void QuickSort(int *a,int p, int r)
 {
     int q;
-    if(r > 0)
+    if(p < r)
     {
-        q = partition(a, r);       // partitioning the array based on the pivot, which is the last element of the array.
-        QuickSort(a, q-1);
-        QuickSort(a+q+1, r-q-1);
+        q = partition(a,p,r);       // partitioning the array based on the pivot, which is the last element of the array.
+        QuickSort(a,p,q-1);
+        QuickSort(a,q+1,r);
     }
 }
+
+
+
