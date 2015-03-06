@@ -55,7 +55,7 @@ void PrintQueue(queue q)
     NODE pr = q.front;
     while(pr!=NULL)
     {
-        printf("%d ",pr->s.num);
+        printf("%d ",*(int*) pr->data);
         pr = pr->next;
     }
 

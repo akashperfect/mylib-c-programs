@@ -6,11 +6,12 @@ int main(int argc, char ** argv)
 {
 	NODET root;
 	root = CustomTree();
-	PrintTree(root);
+	Inorder(root);
 	printf("\n");
 	Postorder(root);
 	printf("\n");
 	Preorder(root);
 	printf("\n");
 	LevelOrder(root);
+	printf("\n%d\n", hasPathSum(root,10));
 }

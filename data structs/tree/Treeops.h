@@ -79,8 +79,8 @@ void Preorder(NODET root)
 {
     if(root == NULL )return ;
     printf("%d ",root->data);
-    PrintTree(root->left);
-    PrintTree(root->right);
+    Preorder(root->left);
+    Preorder(root->right);
 
 }
 
@@ -110,6 +110,19 @@ void LevelOrder(NODET root)
             q = Enqueue(q , &node->right);
         }
     }
+}
+
+int hasPathSum(NODET root, int val)
+{
+    if(root == NULL)
+        return 0;
+    if(root->left == NULL && root->right == NULL)
+        if(val == root->data)
+            return 1;
+        else
+            return 0;
+    val -= root->data;
+    return hasPathSum(root->left, val) || hasPathSum(root->right, val);
 }
 
 #endif // TREEOPS_H_INCLUDED
