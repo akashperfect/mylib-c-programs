@@ -2,7 +2,8 @@
 #include <stdlib.h>
 #include <math.h>
 #include "MergeSort.h"
-#include "QuickSelect.h"
+// #include "QuickSelect.h"
+#include "QuickSort.h"
 
 int TestFunction(int *a, int n)
 {
@@ -17,14 +18,14 @@ int TestFunction(int *a, int n)
 
 int main(int argc, char const *argv[])
 {
-	int i, *a, size = 10;
-	a = (int *)calloc(size,4);
+	int i, *a, size = 100;
+	a = (int *)calloc(size,sizeof(int));
 	for(i = 0 ; i < size ; i ++)
 	{
-		a[i] = rand();
+		a[i] = rand()%100;
 	}
 	// TestFunction(a+2, size-2);
-	printf("%d\n", QuickSelect(a, 9, size-1));
+	// printf("%d\n", QuickSelect(a, 9, size-1));
 	QuickSort(a,size-1);
 	for (i = 0; i < size; ++i)
 	{
