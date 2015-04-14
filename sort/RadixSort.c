@@ -38,28 +38,4 @@ int radixsort(int *a,int *b,int d,int size)// d is the number of digits in all t
     for(i=1;i<=d;i++)
     counting_sort(a,b,9,size,i);
 }
-int main(void)
-{
-    int *a,*b,k=-1,size,i,count=0,t;
-    printf("Enter size and array\n");
-    scanf("%d",&size);
-    a = (int*)malloc(size*sizeof(int));
-    b = (int*)malloc(size*sizeof(int));
-    for(i=0;i<size;i++)
-    {
-        scanf("%d",(a+i));
-    }
-    t=*a;
-    while(1)
-    {
-        if(t!=0)
-        t/=10;
-        else break;
-        count++;
-    }
-    size--;
-    radixsort(a,b,count,size);
-    for(i=0;i<=size;i++)
-    printf("%d ",*(b+i));
-    return 0;
-}
+

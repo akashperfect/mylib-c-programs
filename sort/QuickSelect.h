@@ -12,23 +12,20 @@ void swap(int *a, int p, int r)
 	*(a+r) = temp;
 }
 
-int QuickMed(int *a, int n)
+int QuickMed(int n)
 {
 	int i, *b, x, m;
 	if(n <= 5)
 	{
-		QuickSort(a, n);
-		return a[n/2];
+		return n/2;
 	} 
 	m = (n - 1) / 5;
 	b = (int *)calloc(m+1, sizeof(int));
 	for(i = 0; i < m; i ++)
 	{
-		QuickSort(a+(i*5), (i+1)*5 - 1);
-		b[i] = a[i*5 + 3];
+		b[i] = i*5 + 2;
 	}
-	QuickSort(a+(i*5), n);
-	b[i] = a[i*5 + n/2];
+	b[i] = i*5 + n/2;
 	x = QuickMed(b, i);
 	return x;
 }
@@ -54,8 +51,8 @@ int Partition(int *a,int r,int x)   // rearranges sub-array A[p..r] in place
 int QuickSelect(int *a, int k, int n)
 {
 	int b, p;
-	// b = QuickMed(a, n);
-	p = partition(a, n);
+	b = QuickMed(a, n);
+	p = Partition(a, b, n);
 	if(k == p)
 		return a[k];
 	else if(k < p)
