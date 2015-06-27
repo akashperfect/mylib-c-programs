@@ -2,6 +2,7 @@
 #define TREEOPS_H_INCLUDED
 #include "Tree.h"
 #include "../queue/Queue.h"
+#include "../stack/Stack.h"
 
 NODET CreateNodeTree(int val)
 {
@@ -115,7 +116,7 @@ void LevelOrder(NODET root)
     }
 }
 
-int hasPathSum(NODET root, int val)
+int hasPathSumRootToLeaf(NODET root, int val)
 {
     if(root == NULL)
         return 0;
@@ -126,6 +127,12 @@ int hasPathSum(NODET root, int val)
             return 0;
     val -= root->data;
     return hasPathSum(root->left, val) || hasPathSum(root->right, val);
+}
+
+void
+hasPathSum(NODET root)
+{
+
 }
 
 void printPaths(NODET root, NODET* a, int i)

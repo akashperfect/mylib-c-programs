@@ -1,6 +1,6 @@
 #ifndef STACKS_H_INCLUDED
 #define STACKS_H_INCLUDED
-#include "Linkops.h"
+#include "../linked_list/Linkops.h"
 
 typedef struct {
     int size;
