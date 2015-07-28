@@ -3,6 +3,7 @@
 #include "Tree.h"
 #include "../queue/Queue.h"
 #include "../stack/Stack.h"
+#include "../array/Array.h"
 
 NODET CreateNodeTree(int val)
 {
@@ -126,14 +127,39 @@ int hasPathSumRootToLeaf(NODET root, int val)
         else
             return 0;
     val -= root->data;
-    return hasPathSum(root->left, val) || hasPathSum(root->right, val);
+    return hasPathSumRootToLeaf(root->left, val) || 
+    			hasPathSumRootToLeaf(root->right, val);
 }
 
 void
-hasPathSum(NODET root)
+hasPathSum_proc(stack *s, array *a)
 {
+	NODET *n = pop(s);
+	append(a, (*n)->data);
+	printArray(a);
+	if((*n)->left != NULL){
+		push(s, &((*n)->left));
+		hasPathSum_proc(s, a);
+	}
+	if((*n)->right != NULL){
+		push(s, &((*n)->right));
+		hasPathSum_proc(s, a);
+	}
+
 
 }
+
+void
+hasPathSum_main(NODET root)
+{
+	stack s;
+	array a;
+	CreateStack(&s);
+	createArray(&a, 10);
+	push(&s, &root);
+	hasPathSum_proc(&s, &a);
+}
+
 
 void printPaths(NODET root, NODET* a, int i)
 {

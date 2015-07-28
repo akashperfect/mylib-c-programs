@@ -13,6 +13,6 @@ int main(int argc, char ** argv)
 	Preorder(root);
 	printf("\n");
 	LevelOrder(root);
-	printf("\n%d\n", hasPathSum(root,10));
+	printf("\n%d\n", hasPathSumRootToLeaf(root,10));
 	printPath(root);
 }
