@@ -1,21 +1,23 @@
-#include<stdio.h>
-#include<stdlib.h>
-#include<string.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include "Graphops.h"
-#include "Queue.h"
+#include "../queue/Queue.h"
 
 //Insert Children
 //queue InsertChildrenQueue()
 
 void BFS(graph g)
 {
-    int no = g.size;
-    int * visit;
-    visit = (int*)calloc((no+1),sizeof(int));
+    int no, start, *visit;
     queue q;
-    NODE fr = CreateNode();
+    NODE fr, temp;
+    no = g.size;
+    start = 1;
+    visit = (int *)calloc((no+1), sizeof(int));
+    fr = CreateNode(&start);
     q = CreateQueue();
-    fr = InsertValue(fr,1);
+    // fr = InsertValue(fr,1);
     visit[Value(fr)] = 1;
     q = Enqueue(q, fr);
     while(q.front!=NULL)
@@ -25,7 +27,7 @@ void BFS(graph g)
         fr = g.list[Value(fr)].top;
         while(fr!=NULL)
         {
-            NODE temp = CreateNode();
+            temp = CreateNode();
             temp = InsertValue(temp,Value(fr));
             if(visit[Value(fr)] != 1)
             {
@@ -40,7 +42,7 @@ void BFS(graph g)
 }
 
 
-/*
+
 int main(void)
 {
     graph g;
@@ -60,4 +62,4 @@ int main(void)
 
 
 }
-*/
+

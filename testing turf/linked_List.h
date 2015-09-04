@@ -1,54 +1,74 @@
 #ifndef LINKOPS_H_INCLUDED
 #define LINKOPS_H_INCLUDED
-#include "Link.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+typedef struct node* NODE;
+
+struct node{
+    void * data; 
+    NODE next;
+    NODE prev;
+};
+
+typedef struct
+{
+    int size;
+    NODE head;
+}List;
 
 
 extern NODE CreateNode();
 extern NODE InsertValue(NODE n, void * val);
-extern void PrintList(List l);
+extern void PrintList(List *l);
 
-NODE CreateNode(void * data)
+NODE 
+CreateNode(void * data)
 {
     NODE n;
-    n = (NODE)malloc(sizeof(struct node));
+    n = (NODE)calloc(1, sizeof(struct node));
     n->data = data;
+    // n->data = (void *)malloc(sizeof(int));
+    // memcpy(n->data, data, sizeof(int));
     n->next = NULL;
     n->prev = NULL;
     return n;
 }
 
-NODE InsertValue(NODE n, void * val)
+NODE 
+InsertValue(NODE n, void * val)
 {
     n->data = val;
     return n;
 }
 
-void * GetData(NODE n)
+void * 
+GetData(NODE n)
 {
     return n->data;
 }
 
-List CreateList()
+void
+CreateList(List *l)
 {
-    List l;
-    l.size = 0;
-    l.head = NULL;
-    return l;
+    l->size = 0;
+    l->head = NULL;
 }
 
-List InsertList(List l, void * data)
+void
+InsertList(List *l, void * data)
 {
     NODE n = CreateNode(data);
-    if(l.head == NULL)
-        l.head = n;
+    // printf("sizeof data = %d\n", sizeof(double));
+    if(l->head == NULL)
+        l->head = n;
     else
     {
-        n->next = l.head;
-        l.head = n;
+        n->next = l->head;
+        l->head = n;
     }
-    l.size ++;
-    return l;
-
+    l->size ++;
 }
 
 List InsertSortList(List L, void * n)
@@ -78,31 +98,22 @@ List InsertSortList(List L, void * n)
     return L;
 }
 
-List CustomList(List l)
+void
+CustomList(List *l)
 {
 
     int l1=1,l2=2,l3=3,l4=4,l5=5,l6=6,l7=7,l8=8,l9=9,l10=10;
-    printf("%u \n", &l);
-    l = InsertList(l,&l5);
-    PrintList(l);
-    l = InsertList(l,&l8);
-    PrintList(l);
-    l = InsertList(l,&l3);
-    PrintList(l);
-    l = InsertList(l,&l1);
-    PrintList(l);
-    l = InsertList(l,&l10);
-    PrintList(l);
-    l = InsertList(l,&l9);
-    PrintList(l);
-    l = InsertList(l,&l4);
-    PrintList(l);
-    l = InsertList(l,&l2);
-    PrintList(l);
-    l = InsertList(l,&l7);
-    PrintList(l);
-    printf("%u \n", &l);
-    return l;
+    // printf("%u \n", &l);
+    InsertList(l,&l5);
+    InsertList(l,&l8);
+    InsertList(l,&l3);
+    InsertList(l,&l1);
+    InsertList(l,&l10);
+    InsertList(l,&l9);
+    InsertList(l,&l4);
+    InsertList(l,&l2);
+    InsertList(l,&l7);
+    // printf("%u \n", &l);
 }
 
 List ReverseList(List L)
@@ -258,9 +269,9 @@ void DeleteNodeP( NODE n)
 
 }
 
-void PrintList(List L)
+void PrintList(List *L)
 {
-    NODE curr = L.head;
+    NODE curr = L->head;
     int i=0;
     while(curr != NULL && i++<10)
     {
@@ -270,14 +281,5 @@ void PrintList(List L)
     printf("\n");
 }
 
-int ValuePQ(priorityqueue p)
-{
-    return p.k;
-}
-/*
-int Weight(NODE n)
-{
-    return n->s.w;
-}
-*/
+
 #endif // LINKOPS_H_INCLUDED

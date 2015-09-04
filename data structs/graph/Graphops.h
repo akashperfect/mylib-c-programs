@@ -1,7 +1,7 @@
-#ifndef BUILD-GRAPH_H_INCLUDED
-#define BUILD-GRAPH_H_INCLUDED
-#include "Stack.h"
-#include "PriorityQueues.h"
+#ifndef BUILD_GRAPH_H_INCLUDED
+#define BUILD_GRAPH_H_INCLUDED
+#include "../stack/Stack.h"
+#include "../PriorityQueues.h"
 
 typedef struct{
     stack * list;
@@ -27,7 +27,7 @@ graph CreateGraph(int n)
     g.list = (stack*)malloc((n+1)*sizeof(stack));
     while(i<=n)
     {
-        g.list[i] = CreateStack();
+        CreateStack(&g.list[i]);
         i++;
     }
     g.size = n;
@@ -61,15 +61,15 @@ stack * CreateGraph(int n)
 
 graph AddEdge(graph g, int v, int w)
 {
-    g.list[v] = push(g.list[v],w);
-    g.list[w] = push(g.list[w],v);
+    push(&g.list[v], &w);
+    push(&g.list[w], &v);
     return g;
 }
 graph AddEdgeW(graph g, int u, int v, int wt, int ***w)
 {
     //int ** we = (*w);
-    g.list[u] = push(g.list[u],v);
-    g.list[v] = push(g.list[v],u);
+    push(&g.list[u], &v);
+    push(&g.list[v], &u);
     *(*(*w+u)+v) = wt;
     *(*(*w+v)+u) = wt;
     return g;
@@ -77,7 +77,7 @@ graph AddEdgeW(graph g, int u, int v, int wt, int ***w)
 
 graph AddEdgeDirected(graph g, int u ,int v)
 {
-    g.list[u] = push(g.list[u],v);
+    push(&g.list[u], &v);
     return g;
 }
 
@@ -110,8 +110,8 @@ NODE GraphNodeV(graph g, int u, int v)
     NODE curr = g.list[u].top;
     while(curr!=NULL)
     {
-        if(curr->s.num==v)
-        return curr;
+        if(*(int *)curr->data == v)
+            return curr;
         curr = curr->next;
     }
     return ;

@@ -1,6 +1,6 @@
 #ifndef PRIORITYQUEUES_H_INCLUDED
 #define PRIORITYQUEUES_H_INCLUDED
-#include "Linkops.h"
+#include "linked_list/Linkops.h"
 
 extern PQ MaxHeapify(PQ p, int i);
 extern PQ InsertPQ(PQ p,int n);
