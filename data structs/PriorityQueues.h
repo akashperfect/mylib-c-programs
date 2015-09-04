@@ -2,7 +2,7 @@
 #define PRIORITYQUEUES_H_INCLUDED
 #include "linked_list/Linkops.h"
 
-extern PQ MaxHeapify(PQ p, int i);
+extern void MaxHeapify(PQ *p, int i);
 extern PQ InsertPQ(PQ p,int n);
 extern int MaximumPQ(PQ p);
 extern PQ IncreaseKeyPQ(PQ p, int x, int k);
@@ -26,21 +26,21 @@ PQ CreatePQ()
     return p;
 }
 
-PQ MaxHeapify(PQ p, int i)
+void
+MaxHeapify(PQ *p, int i)
 {
-    int left = 2*i+1, right = 2*i+2,large;
-    if (left<p.size&&ValuePQ(p.p[left])>ValuePQ(p.p[i]))
+    int left = 2*i+1, right = 2*i+2, large;
+    if (left < p->size && ValuePQ(p->p[left]) > ValuePQ(p->p[i]))
         large = left;
     else
         large = i;
-    if (right<p.size && ValuePQ(p.p[right])>ValuePQ(p.p[large]))
+    if (right < p->size && ValuePQ(p->p[right]) > ValuePQ(p->p[large]))
         large = right;
-    if(large!=i)
+    if(large != i)
     {
-        ExchangePQ(&p.p[i],&p.p[large]);
-        p = MaxHeapify(p,large);
+        ExchangePQ(&(p->p[i]), &(p->p[large]));
+        MaxHeapify(p,large);
     }
-    return p;
 }
 
 PQ InsertPQ(PQ p,int n)
@@ -75,12 +75,10 @@ PQ IncreaseKeyPQ(PQ p, int x, int k)
 
 int ExtractMaxPQ(PQ *q)
 {
-    PQ p = *q;
-    int max = ValuePQ(p.p[0]);
-    p.p[0].k =  p.p[p.size-1].k;
-    p.size--;
-    p = MaxHeapify(p, 0);
-    *q = p;
+    int max = ValuePQ(q->p[0]);
+    q->p[0].k =  q->p[q->size-1].k;
+    q->size--;
+    MaxHeapify(q, 0);
     return max;
 }
 

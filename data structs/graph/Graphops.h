@@ -14,9 +14,9 @@ extern graph AddNode(graph g, int n);
 extern void AddEdge(graph *g, int *v, int *w);
 extern graph AddEdgeDirected(graph g, int v, int w);
 extern graph AddWeightedEdge(graph g, int *** w, int u, int v, int wt);
-extern graph InitializeSingleSource(graph g, int s);
+extern void InitializeSingleSource(graph *g, int s);
 extern NODE GraphNodeV(graph g, int u, int v);
-extern graph RelaxEdge(graph g, PQ *q, int u, int v, int **w);
+extern void RelaxEdge(graph *g, PQ *q, int u, int v, int **w);
 extern PQ MakePQofGraph(graph g);
 extern void PrintGraph(graph);
 
@@ -36,10 +36,10 @@ CreateGraph(graph *g, int n)
 int ** CreateGraphAM(int n)
 {
     int ** w,i;
-    w = (int**)malloc((n+1)*sizeof(int*));
-    for(i=0;i<=n;i++)
+    w = (int **)calloc((n+1), sizeof(int *) );
+    for(i = 0; i <= n; i++)
     {
-        (*w) = (int*)malloc((n+1)*sizeof(int));
+        w[i] = (int *)calloc((n+1), sizeof(int) );
     }
     return w;
 }
@@ -63,17 +63,18 @@ AddEdge(graph *g, int *v, int *w)
 {
     push(&g->list[*v], w);
     push(&g->list[*w], v);
-    printf("v = %d w = %d\n", *v, *w);
-    PrintGraph(*g);
 }
-graph AddEdgeW(graph g, int u, int v, int wt, int ***w)
+
+void
+AddEdgeW(graph *g, int *u, int *v, int wt, int **w)
 {
     //int ** we = (*w);
-    push(&g.list[u], &v);
-    push(&g.list[v], &u);
-    *(*(*w+u)+v) = wt;
-    *(*(*w+v)+u) = wt;
-    return g;
+    push(&g->list[*u], v);
+    push(&g->list[*v], u);
+    // *(*(*w+*u)+*v) = wt;
+    // *(*(*w+*v)+*u) = wt;
+    w[*u][*v] = wt;
+    w[*v][*u] = wt;
 }
 
 graph AddEdgeDirected(graph g, int u ,int v)
@@ -94,16 +95,16 @@ graph AddWeightedEdge(graph g, int *** wi, int u, int v, int wt)
     return g;
 }
 
-graph InitializeSingleSource(graph g, int s)
+void
+InitializeSingleSource(graph *g, int s)
 {
-    int i = g.size;
+    int i = g->size;
     while(i>0)
     {
-        g.list[i].d = MAXINT;
+        g->list[i].d = MAXINT;
         i--;
     }
-    g.list[s].d=0;
-    return g;
+    g->list[s].d=0;
 }
 
 NODE GraphNodeV(graph g, int u, int v)
@@ -118,14 +119,14 @@ NODE GraphNodeV(graph g, int u, int v)
     return ;
 }
 
-graph RelaxEdge(graph g, PQ *q, int u, int v, int **w)
+void
+RelaxEdge(graph *g, PQ *q, int u, int v, int **w)
 {
-    if(g.list[v].d > g.list[u].d + w[u][v])
+    if(g->list[v].d > g->list[u].d + w[u][v])
     {
-        g.list[v].d = g.list[u].d + w[u][v];
-        *q = DecreaseKeyPQ(*q,v,g.list[v].d);
+        g->list[v].d = g->list[u].d + w[u][v];
+        *q = DecreaseKeyPQ(*q,v,g->list[v].d);
     }
-    return g;
 }
 
 PQ MakePQofGraph(graph g)

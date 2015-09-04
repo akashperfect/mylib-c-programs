@@ -1,37 +1,36 @@
-#include<stdio.h>
-#include<stdlib.h>
-#include<string.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include "Graphops.h"
-#include "Queue.h"
+#include "../queue/Queue.h"
 
 //Insert Children
 //queue InsertChildrenQueue()
 
 void DFS(graph g)
 {
-    int no = g.size;
-    int * visit;
-    visit = (int*)calloc((no+1),sizeof(int));
+    int no, start, * visit;
+    NODE top, temp;
     stack s;
-    NODE top = CreateNode();
-    s = CreateStack();
-    top = InsertValue(top,1);
+    start = 1;
+    no = g.size;
+    CreateStack(&s);
+    top = CreateNode(&start);
+    visit = (int *)calloc( (no+1), sizeof(int));
     visit[Value(top)] = 1;
-    s = push(s, Value(top));
-    while(s.top!=NULL)
+    push(&s, top->data);
+    while(s.top != NULL)
     {
-        top = CreateNode();
-        top = InsertValue(top,Value(s.top));
-        s = pop(s);
+        top = CreateNode(s.top->data);
+        pop(&s);
         printf("%d ", Value(top));
         top = g.list[Value(top)].top;
-        while(top!=NULL)
+        while(top != NULL)
         {
-            NODE temp = CreateNode();
-            temp = InsertValue(temp,Value(top));
+            temp = CreateNode(top->data);
             if(visit[Value(top)] != 1)
             {
-                s = push(s,Value(temp));
+                push(&s, temp->data);
                 visit[Value(top)] = 1;
             }
             top = top->next;
@@ -41,24 +40,26 @@ void DFS(graph g)
 }
 
 
-/*
 int main(void)
 {
     graph g;
-    g = CreateGraph(9);
-    g = AddEdge(g,1,2);
-    g = AddEdge(g,1,4);
-    g = AddEdge(g,1,3);
-    g = AddEdge(g,4,2);
-    g = AddEdge(g,3,4);
-    g = AddEdge(g,3,5);
-    g = AddEdge(g,6,4);
-    g = AddEdge(g,5,9);
-    g = AddEdge(g,5,8);
-    g = AddEdge(g,7,9);
-    //printf("%d ", Value(g[1].top->next));
+    int u1=1, u2=2, u3=3, u4=4, u5=5, u6=6, 
+    u7=7, u8=8, u9=9;
+    CreateGraph(&g, 10);
+    AddEdge(&g, &u1, &u2);
+    AddEdge(&g, &u1, &u4);
+    AddEdge(&g, &u1, &u3);
+    AddEdge(&g, &u4, &u2);
+    AddEdge(&g, &u3, &u4);
+    AddEdge(&g, &u3, &u5);
+    AddEdge(&g, &u6, &u4);
+    AddEdge(&g, &u5, &u9);
+    AddEdge(&g, &u5, &u8);
+    AddEdge(&g, &u7, &u8);
+    PrintGraph(g);
+
+    // printf("h %d ", Value(g.list[4].top));
     DFS(g);
 
 
 }
-*/

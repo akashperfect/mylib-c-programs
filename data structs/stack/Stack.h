@@ -31,7 +31,8 @@ push(stack *s, void* val)
     return ;
 }
 
-void* pop(stack *s)
+void* 
+pop(stack *s)
 {
     NODE temp;
     temp = s->top;
