@@ -8,30 +8,29 @@ typedef struct{
     int size;
 }graph; //Data structure of graph if it needs to be modified on the fly
 
-extern graph CreateGraph(int n);
+extern void CreateGraph(graph *g, int n);
 extern int ** CreateGraphAM(int n);
 extern graph AddNode(graph g, int n);
-extern graph AddEdge(graph g, int v, int w);
+extern void AddEdge(graph *g, int *v, int *w);
 extern graph AddEdgeDirected(graph g, int v, int w);
 extern graph AddWeightedEdge(graph g, int *** w, int u, int v, int wt);
 extern graph InitializeSingleSource(graph g, int s);
 extern NODE GraphNodeV(graph g, int u, int v);
 extern graph RelaxEdge(graph g, PQ *q, int u, int v, int **w);
 extern PQ MakePQofGraph(graph g);
+extern void PrintGraph(graph);
 
-
-graph CreateGraph(int n)
+void
+CreateGraph(graph *g, int n)
 {
-    graph g;
-    int i=0;
-    g.list = (stack*)malloc((n+1)*sizeof(stack));
-    while(i<=n)
+    int i = 0;
+    g->list = (stack *)calloc((n+1), sizeof(stack));
+    while(i <= n)
     {
-        CreateStack(&g.list[i]);
+        CreateStack(&g->list[i]);
         i++;
     }
-    g.size = n;
-    return g;
+    g->size = n;
 }
 
 int ** CreateGraphAM(int n)
@@ -59,11 +58,13 @@ stack * CreateGraph(int n)
 }
 */
 
-graph AddEdge(graph g, int v, int w)
+void
+AddEdge(graph *g, int *v, int *w)
 {
-    push(&g.list[v], &w);
-    push(&g.list[w], &v);
-    return g;
+    push(&g->list[*v], w);
+    push(&g->list[*w], v);
+    printf("v = %d w = %d\n", *v, *w);
+    PrintGraph(*g);
 }
 graph AddEdgeW(graph g, int u, int v, int wt, int ***w)
 {
@@ -84,7 +85,7 @@ graph AddEdgeDirected(graph g, int u ,int v)
 graph AddWeightedEdge(graph g, int *** wi, int u, int v, int wt)
 {
     int ** we = (*wi);
-    g = AddEdge(g,u,v);
+    AddEdge(&g, &u, &v);
     //g.list[u].top->s.w = wt;
     //g.list[v].top->s.w = wt;
     we[u][v] = wt;
@@ -136,5 +137,24 @@ PQ MakePQofGraph(graph g)
         p = InsertMinPQ(p,g.list[i].d);
     }
     return p;
+}
+
+void printNode(void * data)
+{
+    printf("%d ", *(int *) data);
+}
+
+void
+PrintGraph(graph g)
+{
+    int i;
+    printf("Printing the Graph\n");
+    for(i = 0; i < g.size; i ++){
+        printf("%d -> ", i);
+        PrintStack(&g.list[i], printNode);
+        printf("\n");
+
+    }
+    printf("\n");
 }
 #endif // BUILD-GRAPH_H_INCLUDED

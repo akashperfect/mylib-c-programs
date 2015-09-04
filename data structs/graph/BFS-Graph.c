@@ -19,45 +19,49 @@ void BFS(graph g)
     q = CreateQueue();
     // fr = InsertValue(fr,1);
     visit[Value(fr)] = 1;
-    q = Enqueue(q, fr);
-    while(q.front!=NULL)
+    Enqueue(&q, fr->data);
+    while(q.front != NULL)
     {
         fr = q.front;
         printf("%d ", Value(fr));
         fr = g.list[Value(fr)].top;
-        while(fr!=NULL)
+        while(fr != NULL)
         {
-            temp = CreateNode();
-            temp = InsertValue(temp,Value(fr));
+            temp = CreateNode(fr->data);
             if(visit[Value(fr)] != 1)
             {
-                q = Enqueue(q,temp);
+                Enqueue(&q, temp->data);
                 visit[Value(fr)] = 1;
             }
             fr = fr->next;
         }
-        q = Dequeue(q);
+        Dequeue(&q);
     }
     return;
 }
 
-
+            
 
 int main(void)
 {
     graph g;
-    g = CreateGraph(9);
-    g = AddEdge(g,1,2);
-    g = AddEdge(g,1,4);
-    g = AddEdge(g,1,3);
-    g = AddEdge(g,4,2);
-    g = AddEdge(g,3,4);
-    g = AddEdge(g,3,5);
-    g = AddEdge(g,6,4);
-    g = AddEdge(g,5,9);
-    g = AddEdge(g,5,8);
-    g = AddEdge(g,7,8);
-    //printf("%d ", Value(g[1].top->next));
+    int u1=1, u2=2, u3=3, u4=4, u5=5, u6=6, 
+    u7=7, u8=8, u9=9;
+    CreateGraph(&g, 10);
+    AddEdge(&g, &u1, &u2);
+    // PrintGraph(g);
+    AddEdge(&g, &u1, &u4);
+    AddEdge(&g, &u1, &u3);
+    AddEdge(&g, &u4, &u2);
+    AddEdge(&g, &u3, &u4);
+    AddEdge(&g, &u3, &u5);
+    AddEdge(&g, &u6, &u4);
+    AddEdge(&g, &u5, &u9);
+    AddEdge(&g, &u5, &u8);
+    AddEdge(&g, &u7, &u8);
+    PrintGraph(g);
+
+    // printf("h %d ", Value(g.list[4].top));
     BFS(g);
 
 

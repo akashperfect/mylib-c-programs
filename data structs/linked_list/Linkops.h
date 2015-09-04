@@ -28,6 +28,12 @@ void * GetData(NODE n)
     return n->data;
 }
 
+int 
+Value(NODE temp)
+{
+    return *(int *) temp->data;
+}
+
 List CreateList()
 {
     List l;

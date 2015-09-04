@@ -20,29 +20,29 @@ queue CreateQueue()
     return q;
 }
 
-queue Enqueue(queue q, void * data)
+void
+Enqueue(queue *q, void * data)
 {
     NODE n = CreateNode(data);
-    if(q.front == NULL)
-        q.front = q.rear = n;
+    if(q->front == NULL)
+        q->front = q->rear = n;
     else
     {
-        q.rear->next = n;
-        q.rear = n;
+        q->rear->next = n;
+        q->rear = n;
     }
-    q.size++;
-    return q;
+    q->size++;
 }
 
-queue Dequeue(queue q)
+void
+Dequeue(queue *q)
 {
-    if(q.size <= 0)
-        return q; 
-    NODE del = q.front;
-    q.front = q.front->next;
+    if(q->size <= 0)
+        return ; 
+    NODE del = q->front;
+    q->front = q->front->next;
     free(del);
-    q.size--;
-    return q;
+    q->size--;
 }
 
 void * QueueTop(queue q)
@@ -53,11 +53,13 @@ void * QueueTop(queue q)
 void PrintQueue(queue q)
 {
     NODE pr = q.front;
+    printf("Printing the Queue\n");
     while(pr!=NULL)
     {
         printf("%d ",*(int*) pr->data);
         pr = pr->next;
     }
+    printf("\n");
 
 }
 #endif // QUEUE_H_INCLUDED
