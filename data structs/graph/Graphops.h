@@ -17,7 +17,7 @@ extern graph AddWeightedEdge(graph g, int *** w, int u, int v, int wt);
 extern void InitializeSingleSource(graph *g, int s);
 extern NODE GraphNodeV(graph g, int u, int v);
 extern void RelaxEdge(graph *g, PQ *q, int u, int v, int **w);
-extern PQ MakePQofGraph(graph g);
+extern void MakePQofGraph(PQ *, graph g);
 extern void PrintGraph(graph);
 
 void
@@ -95,16 +95,33 @@ graph AddWeightedEdge(graph g, int *** wi, int u, int v, int wt)
     return g;
 }
 
+/*  Initializes the graph, containing
+    all the vertices to Infinite
+    which will later be used for 
+    calculating min distance
+*/
+
 void
 InitializeSingleSource(graph *g, int s)
 {
     int i = g->size;
-    while(i>0)
+    while(i >= 0)
     {
         g->list[i].d = MAXINT;
         i--;
     }
     g->list[s].d=0;
+}
+
+void
+InitializePresent(int *set, int size)
+{
+    int i;
+    set = (int *)calloc(size, sizeof(int));
+    for (i = 0; i < size; ++i){
+        set[i] = MAXINT;
+        /* code */
+    }
 }
 
 NODE GraphNodeV(graph g, int u, int v)
@@ -125,19 +142,23 @@ RelaxEdge(graph *g, PQ *q, int u, int v, int **w)
     if(g->list[v].d > g->list[u].d + w[u][v])
     {
         g->list[v].d = g->list[u].d + w[u][v];
-        *q = DecreaseKeyPQ(*q,v,g->list[v].d);
+        DecreaseKeyPQ(q, v, g->list[v].d);
     }
 }
 
-PQ MakePQofGraph(graph g)
+/*  Makes a priority queue of 
+    all the graph edges
+*/
+    
+void
+MakePQofGraph(PQ *q, graph g)
 {
-    PQ p = CreatePQ();
-    int i=1;
-    while(i<g.size)
-    {
-        p = InsertMinPQ(p,g.list[i].d);
+    int i = 1;
+    CreatePQ(q);
+    while(i <= g.size){
+        InsertMinPQ(q, g.list[i].d);
+        i ++;
     }
-    return p;
 }
 
 void printNode(void * data)

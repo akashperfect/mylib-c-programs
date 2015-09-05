@@ -5,19 +5,19 @@ int Dijkstra(graph g, int st, int e, int **w)
 {
     PQ q;
     NODE curr;
-    int u,v;
+    int u,v, *set;
     InitializeSingleSource(&g, st);
-    MakePQofGraph(&q, g);
-    while(q.size > 0)
+    set = (int *)calloc(g.size, sizeof(int));
+    v = g.size;
+    // set[st] = 0;
+    while(v --)
     {
-        u = ExtractMinPQ(&q);
+        GetMinNotIncl(g, set);
         if(u == e) 
             return g.list[u].d;
         curr = g.list[u].top;
         while(curr != NULL)
         {
-            RelaxEdge(&g, &q, u, 
-                Value(curr->data), w);
             curr = curr->next;
         }
     }

@@ -15,7 +15,7 @@ void
 CreateStack(stack *s)
 {
     s->size = 0;
-    s->d = 0;
+    s->d = MAXINT;
     s->top = NULL;
     return ;
 }

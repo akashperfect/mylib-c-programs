@@ -7,23 +7,22 @@ extern PQ InsertPQ(PQ p,int n);
 extern int MaximumPQ(PQ p);
 extern PQ IncreaseKeyPQ(PQ p, int x, int k);
 extern int ExtractMaxPQ(PQ *p);
-extern PQ CreatePQ();
+extern void CreatePQ(PQ *);
 extern void ExchangePQ(priorityqueue *p,priorityqueue* q);
 extern void InsertValuePQ(priorityqueue *p, int n);
 extern PQ MinHeapify(PQ p, int i);
 extern PQ InsertPQ(PQ p,int n);
-extern PQ InsertMinPQ(PQ p,int n);
+extern void InsertMinPQ(PQ *p,int n);
 extern int MinimumPQ(PQ p);
-extern PQ DecreaseKeyPQ(PQ p, int x, int k);
+extern void DecreaseKeyPQ(PQ *p, int x, int k);
 extern int ExtractMinPQ(PQ *p);
 
 
-PQ CreatePQ()
+void
+CreatePQ(PQ *q)
 {
-    PQ p;
-    p.p = (pq)malloc(sizeof(struct priorityqueue));
-    p.size=0;
-    return p;
+    q->p = (pq)malloc(sizeof(struct priorityqueue));
+    q->size=0;
 }
 
 void
@@ -101,16 +100,16 @@ void ExchangePQ(priorityqueue *p,priorityqueue* q)
     p = q;
     q = temp;*/
     printf("bp = %d bq = %d",(*p).k,(*q).k);
-    priorityqueue temp;
-    temp = *p;
+    priorityqueue *temp;
+    *temp = *p;
     *p = *q;
-    *q = temp;
+    *q = *temp;
     printf("ap = %d aq = %d\n",(*p).k,(*q).k);
 }
 
 void InsertValuePQ(priorityqueue *p, int n)
 {
-    (*p).k = n;
+    p->k = n;
     //printf("aa");
 }
 
@@ -132,13 +131,12 @@ PQ MinHeapify(PQ p, int i)
     return p;
 }
 
-PQ InsertMinPQ(PQ p,int n)
+void
+InsertMinPQ(PQ *q, int n)
 {
-    InsertValuePQ(&p.p[p.size],1000);
-    p = DecreaseKeyPQ(p,p.size,n);
-    p.size++;
-    return p;
-
+    InsertValuePQ(&(q->p[q->size]), MAXINT);
+    DecreaseKeyPQ(q, q->size, n);
+    q->size++;
 }
 
 int MinimumPQ(PQ p)
@@ -146,20 +144,20 @@ int MinimumPQ(PQ p)
     return ValuePQ(p.p[0]);
 }
 
-PQ DecreaseKeyPQ(PQ p, int x, int k)
+void
+DecreaseKeyPQ(PQ *q, int x, int k)
 {
-    if(ValuePQ(p.p[x])<k)
-    {
+    if(ValuePQ(q->p[x]) < k){
         printf("ERROR: new key larger than previous");
-        return p;
+        return ;
     }
-    InsertValuePQ(&p.p[x],k);
-    while(x>0&&ValuePQ(p.p[x/2])>ValuePQ(p.p[x]))
-    {
-        ExchangePQ(&p.p[x], &p.p[x/2]);
+    InsertValuePQ(&q->p[x], k);
+    while(x > 0){
+        if(ValuePQ(q->p[x/2]) > ValuePQ(q->p[x])){
+            ExchangePQ(&q->p[x], &q->p[x/2]);
+        }
         x = x/2;
     }
-    return p;
 }
 
 
