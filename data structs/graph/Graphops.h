@@ -124,6 +124,20 @@ InitializePresent(int *set, int size)
     }
 }
 
+int GetMinNotIncl(graph g, int *set)
+{
+    int i, index = 0, min;
+    min = MAXINT;
+    for(i = 0; i < g.size; i++){
+        if(g.list[i].d < min && set[i] != 1){
+            min = g.list[i].d;
+            index = i;
+        }
+    }
+    set[index] = 1;
+    return index;
+}
+
 NODE GraphNodeV(graph g, int u, int v)
 {
     NODE curr = g.list[u].top;
@@ -146,6 +160,17 @@ RelaxEdge(graph *g, PQ *q, int u, int v, int **w)
     }
 }
 
+void
+RelaxEdgeSimple(graph *g, int *set, int u, int v, int **w)
+{
+    if(g->list[v].d > g->list[u].d + w[u][v])
+    {
+        g->list[v].d = g->list[u].d + w[u][v];
+        // set[u] = 1;
+        // DecreaseKeyPQ(q, v, g->list[v].d);
+    }
+}
+
 /*  Makes a priority queue of 
     all the graph edges
 */
@@ -164,6 +189,31 @@ MakePQofGraph(PQ *q, graph g)
 void printNode(void * data)
 {
     printf("%d ", *(int *) data);
+}
+
+void
+PrintArray(int *a, int size)
+{
+    int i;
+    for (i = 0; i < size; ++i)
+    {
+        printf("%d ", a[i]);   /* code */
+    }
+    printf("\n");
+}
+
+void
+PrintWieghtedGraph(int **w, int size)
+{
+    int i, j;
+    printf("Printing Entire Weighted Graph\n");
+    for(i = 0; i < size; i++){
+        for (j = 0; j < size; ++j){  
+            printf("%d ", w[i][j]);
+        }
+        printf("\n");
+    }
+    printf("\n");
 }
 
 void
