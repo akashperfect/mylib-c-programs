@@ -43,6 +43,12 @@ CreateEdge(graph_edge **e, int dest, int w)
     (*e)->wt = w;
 }
 
+/*  Need to preserve the graph edge across 
+    functions, being a ADT need to reserve
+    a memory for the structure and store
+    the pointer in our graph for the edges
+*/
+
 void
 AddEdgeW(int u, int v, int w)
 {
