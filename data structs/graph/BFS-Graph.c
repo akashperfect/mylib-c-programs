@@ -44,26 +44,8 @@ void BFS(graph g)
 
 int main(void)
 {
-    graph g;
-    int u1=1, u2=2, u3=3, u4=4, u5=5, u6=6, 
-    u7=7, u8=8, u9=9;
-    CreateGraph(&g, 10);
-    AddEdge(&g, &u1, &u2);
-    // PrintGraph(g);
-    AddEdge(&g, &u1, &u4);
-    AddEdge(&g, &u1, &u3);
-    AddEdge(&g, &u4, &u2);
-    AddEdge(&g, &u3, &u4);
-    AddEdge(&g, &u3, &u5);
-    AddEdge(&g, &u6, &u4);
-    AddEdge(&g, &u5, &u9);
-    AddEdge(&g, &u5, &u8);
-    AddEdge(&g, &u7, &u8);
+    CreateSampleGraph();
     PrintGraph(g);
-
-    // printf("h %d ", Value(g.list[4].top));
     BFS(g);
-
-
 }
 
