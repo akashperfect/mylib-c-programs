@@ -106,19 +106,6 @@ int MaximumPQ()
     return pqueue.arr[0].k;
 }
 
-void 
-PrintPQ()
-{
-    int i = 0;
-    printf("Printing Priority Queue of size %d\n",
-     pqueue.size);
-    while(i < pqueue.size){
-        printf("%d ", GetPriority(i));
-        i ++;
-    }
-    printf("\n");
-}
-
 /*  Not sending the pointers for 
     the exchange as pqueue is global
 */
@@ -198,6 +185,34 @@ ExtractMinPQ()
     pqueue.size --;
     MinHeapify(0);
     return min;
+}
+
+void 
+PrintPQ()
+{
+    int i = 0;
+    printf("Printing Priority Queue of size %d\n",
+     pqueue.size);
+    while(i < pqueue.size){
+        printf("%d ", GetPriority(i));
+        i ++;
+    }
+    printf("\n");
+}
+
+void 
+PrintPQData(void (*printValue)(void *))
+{
+    int i = 0;
+    printf("Printing Priority Queue of size %d\n",
+     pqueue.size);
+    while(i < pqueue.size){
+        printf("%d,", GetPriority(i));
+        (*printValue)(pqueue.arr[i].data);
+        printf(" ");
+        i ++;
+    }
+    printf("\n");
 }
 
 // int ValuePQ(priorityqueue p)

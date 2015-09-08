@@ -3,27 +3,30 @@
 
 int Dijkstra(int st)
 {
-    PQ q;
     NODE curr;
-    int u,v;
+    int u,v, t = 4;
     InitializeSingleSource(st);
-    CreatePQofGraph(&q);
-    PrintPQ(q);
-    while(q.size > 0)
+    CreatePQofGraph();
+    PrintPQData(printNode);
+    while(pqueue.size > 0 )
     {
-        u = ExtractMinPQ(&q);
-        PrintPQ(q);
+        u = *(int *)(ExtractMinPQ().data);
+        PrintPQData(printNode);
         printf("u = %d\n", u);
         distVect[u] = g.list[u].d; // all logic needs 
-        //                 // to be applied here
+    // //     //                 // to be applied here
         curr = g.list[u].top;
         while(curr != NULL)
         {
-            // RelaxEdge(&q, u, EdgeDest(curr), 
-            //     EdgeWeight(curr));
+            RelaxEdge(u, EdgeDest(curr), 
+                EdgeWeight(curr));
             curr = curr->next;
         }
+        PrintPQData(printNode);
+        PrintGraph();
         return;
+        // PrintPQ();
+        // return;
     }
     return MAXINT;
 }
@@ -35,5 +38,6 @@ int main(int argc, char const *argv[])
     CreateDistanceVector();
     PrintGraph(g);
     Dijkstra(1);
+    PrintArray(distVect, 10);
     return 0;
 }

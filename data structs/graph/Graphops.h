@@ -85,12 +85,14 @@ CreateSampleWeightedGraph()
 }
 
 void
-CreatePQofGraph(PQ *q)
+CreatePQofGraph()
 {
     int i = 1;
-    CreatePQ(q);
+    CreatePQ(g.size);
     while(i <= g.size){
-        InsertMinPQ(q, g.list[i].d);
+        int *node = (int *)calloc(1, sizeof(int));
+        *node = i;
+        InsertMinPQ(node, g.list[i].d);
         i ++;
     }
 }
@@ -224,12 +226,12 @@ NODE GraphNodeV(graph g, int u, int v)
 }
 
 void
-RelaxEdge(PQ *q, int u, int v, int w)
+RelaxEdge(int u, int v, int w)
 {
     if(g.list[v].d > g.list[u].d + w)
     {
         g.list[v].d = g.list[u].d + w;
-        DecreaseKeyPQ(q, v, g.list[v].d);
+        DecreaseKeyPQ(v, g.list[v].d);
     }
 }
 
