@@ -30,7 +30,7 @@ int main(int argc, char const *argv[])
     CreateSampleWeightedGraph();
     CreateDistanceVector();
     PrintGraph();
-    printf("%d", Dijkstra(1));
+    Dijkstra(1);
     PrintArray(distVect, 10);
     return 0;
 }

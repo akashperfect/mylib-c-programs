@@ -276,10 +276,7 @@ void PrintList(List L)
     printf("\n");
 }
 
-int ValuePQ(priorityqueue p)
-{
-    return p.k;
-}
+
 /*
 int Weight(NODE n)
 {

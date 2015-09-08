@@ -45,7 +45,11 @@ CreateGraph(int n)
 void
 CreateDistanceVector()
 {
+    int i;
     distVect = (int *)calloc(10, sizeof(int));
+    for (i = 0; i < 10; ++i){
+        distVect[i] = -1;
+    }
 }
 
 void
@@ -78,6 +82,17 @@ CreateSampleWeightedGraph()
     AddEdgeW(5, 7, 8);
     AddEdgeW(5, 8, 7);
     AddEdgeW(6, 9, 8);
+}
+
+void
+CreatePQofGraph(PQ *q)
+{
+    int i = 1;
+    CreatePQ(q);
+    while(i <= g.size){
+        InsertMinPQ(q, g.list[i].d);
+        i ++;
+    }
 }
 
 void
@@ -143,7 +158,6 @@ AddEdgeW(int u, int v, int w)
     graph_edge *e1, *e2;
     CreateEdge(&e1, v, w);
     CreateEdge(&e2, u, w);
-    printf("e1 = %d %d\n", e1->dest, e1->wt);
     push(&g.list[u], e1);
     push(&g.list[v], e2);
 }
@@ -210,11 +224,11 @@ NODE GraphNodeV(graph g, int u, int v)
 }
 
 void
-RelaxEdge(PQ *q, int u, int v, int **w)
+RelaxEdge(PQ *q, int u, int v, int w)
 {
-    if(g.list[v].d > g.list[u].d + w[u][v])
+    if(g.list[v].d > g.list[u].d + w)
     {
-        g.list[v].d = g.list[u].d + w[u][v];
+        g.list[v].d = g.list[u].d + w;
         DecreaseKeyPQ(q, v, g.list[v].d);
     }
 }
@@ -243,17 +257,6 @@ EdgeWeight(NODE temp)
     all the graph edges
 */
     
-void
-MakePQofGraph(PQ *q, graph g)
-{
-    int i = 1;
-    CreatePQ(q);
-    while(i <= g.size){
-        InsertMinPQ(q, g.list[i].d);
-        i ++;
-    }
-}
-
 void printNode(void * data)
 {
     printf("%d ", *(int *) data);
@@ -270,6 +273,8 @@ PrintArray(int *a, int size)
     printf("\n");
 }
 
+/*  Prints only the edges of the graph
+*/
 void
 PrintGraph()
 {

@@ -1,5 +1,8 @@
 #ifndef LINK_H_INCLUDED
 #define LINK_H_INCLUDED
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include "../../lib/MaxMin.h"
 
 
@@ -29,20 +32,20 @@ typedef struct
     NODE head;
 }List;
 
-typedef struct priorityqueue * pq;
+// typedef struct arrayNode * arrNode;
 
 
-typedef struct priorityqueue
+typedef struct arrayNode
 {
     void * data;
     int k;
-}priorityqueue;
+}arrayNode;
 
 
 typedef struct
 {
-    pq p;
+    arrayNode *arr;
     int size;
-}PQ;
+}priorityQueue;
 
 #endif // LINK_H_INCLUDED
