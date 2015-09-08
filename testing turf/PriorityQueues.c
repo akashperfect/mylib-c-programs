@@ -3,19 +3,20 @@
 int
 scale_test(int size, int mod)
 {
-	int i, curr, prev = MAXINT, flag = 0, test;
-	CreatePQ(size);
+	int i, curr, prev = -1, flag = 0, test;
+	CreateMinPQ(size);
+	// printf("\n");
 	for(i = 0; i < size; i ++){
 		test = rand() % mod;
 		// printf("%d ", test);
-		InsertPQ(NULL, test);
+		InsertMinPQ(NULL, test);
 	}
 	// PrintPQ();
 	// printf("\n");
 	for(i = 0; i < size; i ++){
-		curr = ExtractMaxPQ().k;
+		curr = ExtractMinPQ().k;
 		// printf("%d ", curr);
-		if(curr > prev){
+		if(curr < prev){
 			flag = 1;
 		}
 		else{
@@ -25,7 +26,6 @@ scale_test(int size, int mod)
 	// printf("\n");
 	if (flag == 1)
 	{
-		/* code */
 		return 0;
 	}
 	return 1;
@@ -34,12 +34,12 @@ scale_test(int size, int mod)
 int main(int argc, char const *argv[])
 {
 	int i, j;
-	for(i = 1; i <= 10; i ++){
+	for(i = 1; i <= 100; i ++){
 		for (j = 2; j <= 100; ++j)
 		{
 			// printf("Checking for %d %d \n", i , j);
 			if(scale_test(i, j) == 0){
-				// printf("%d %d\n", i, j);
+				printf("%d %d\n", i, j);
 				printf("Found\n");
 				return 0;
 			}
@@ -59,27 +59,29 @@ int main(int argc, char const *argv[])
 // int main(int argc, char const *argv[])
 // {
 // 	int i , size = 10;
-// 	CreatePQ(size);
-// 	InsertPQ(NULL, 9);
+// 	CreateMinPQ(size);
+// 	InsertMinPQ(NULL, 1);
 // 	PrintPQ();
-// 	InsertPQ(NULL, 12);
+// 	InsertMinPQ(NULL, 3);
 // 	PrintPQ();
-// 	InsertPQ(NULL, 7);
+// 	InsertMinPQ(NULL, 1);
 // 	PrintPQ();
-// 	InsertPQ(NULL, 11);
+// 	InsertMinPQ(NULL, 1);
 // 	PrintPQ();
-// 	InsertPQ(NULL, 8);
+// 	InsertMinPQ(NULL, 0);
 // 	PrintPQ();
-// 	InsertPQ(NULL, 1);
+// 	InsertMinPQ(NULL, 1);
 // 	PrintPQ();
-// 	InsertPQ(NULL, 11);
+// 	InsertMinPQ(NULL, 11);
 // 	PrintPQ();
-// 	InsertPQ(NULL, 2);
+// 	InsertMinPQ(NULL, 2);
 // 	PrintPQ();
-// 	InsertPQ(NULL, 4);
+// 	InsertMinPQ(NULL, 4);
 // 	PrintPQ();
-// 	InsertPQ(NULL, 2);
+// 	InsertMinPQ(NULL, 2);
 // 	PrintPQ();
-	
+// 	for(i = 0; i < size; i ++){
+// 		printf("%d ", ExtractMinPQ().k);
+// 	}
 // 	return 0;
 // }
