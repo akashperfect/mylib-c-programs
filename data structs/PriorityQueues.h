@@ -6,9 +6,11 @@
 // extern void MaxHeapify(PQ *p, int i);
 // // extern PQ InsertPQ(PQ p,int n);
 // extern int MaximumPQ(PQ p);
-// extern PQ IncreaseKeyPQ(PQ p, int x, int k);
 // extern int ExtractMaxPQ(PQ *p);
-// extern void ExchangePQ(priorityqueue *p,priorityqueue* q);
+extern void ExchangePQ(int ,int );
+extern void IncreaseKeyPQ(int x, int k);
+extern int GetPriority(int );
+extern void SetPriority(int ,int );
 // extern void InsertValuePQ(priorityqueue *p, int n);
 // extern PQ MinHeapify(PQ p, int i);
 // // extern PQ InsertPQ(PQ p,int n);
@@ -22,103 +24,113 @@ priorityQueue pqueue;
 void
 CreatePQ(int size)
 {
-    pqueue.arr = (arrayNode *)calloc(size, sizeof(struct arrayNode));
+    int i;
+    pqueue.arr = (arrayNode *)calloc(size, 
+                    sizeof(struct arrayNode));
     pqueue.size = 0;
     for(i = 0; i < size; i ++){
-        pqueue.arr[i]->data = NULL;
-        pqueue.arr[i]->k = -1;
+        pqueue.arr[i].data = NULL;
+        pqueue.arr[i].k = -1;
     }
 }
+
+/*  Inserts an elemnent in the PQ
+    also the size indicates the number 
+    of elements currently in the PQ
+*/
 
 void
 InsertPQ(void *data, int pri)
 {
-    pqueue.arr[pqueue.size]->data = data;
-    // InsertValuePQ(&pqueue.p[pqueue.size],-1);
-    IncreaseKeyPQ(pri);
-    q->size ++;
+    pqueue.arr[pqueue.size].data = data;
+    IncreaseKeyPQ(pqueue.size, pri);
+    pqueue.size ++;
 }
 
-// void
-// MaxHeapify(PQ *p, int i)
-// {
-//     int left = 2*i+1, right = 2*i+2, large;
-//     if (left < p->size && ValuePQ(p->p[left]) > ValuePQ(p->p[i]))
-//         large = left;
-//     else
-//         large = i;
-//     if (right < p->size && ValuePQ(p->p[right]) > ValuePQ(p->p[large]))
-//         large = right;
-//     if(large != i)
-//     {
-//         ExchangePQ(&(p->p[i]), &(p->p[large]));
-//         MaxHeapify(p,large);
-//     }
-// }
+void 
+IncreaseKeyPQ(int x, int pri)
+{
+    SetPriority(x, pri);
+    while(x > 0 && GetPriority((x - 1)/2)
+                     < GetPriority(x)){
+        ExchangePQ(x, (x - 1)/2);
+        x = (x - 1)/2;
+    }
+    return ;
+}
+
+void
+MaxHeapify(int i)
+{
+    int left = 2*i+1, right = 2*i+2, large;
+    if (left < pqueue.size && 
+            GetPriority(left) > GetPriority(i))
+        large = left;
+    else
+        large = i;
+    if (right < pqueue.size && 
+            GetPriority(right) > GetPriority(large))
+        large = right;
+    if(large != i)
+    {
+        ExchangePQ(i, large);
+        MaxHeapify(large);
+    }
+}
 
 
-// int MaximumPQ(PQ p)
-// {
-//     return ValuePQ(p.p[0]);
-// }
+arrayNode 
+ExtractMaxPQ()
+{
+    arrayNode max = pqueue.arr[0];
+    ExchangePQ(0, pqueue.size - 1);
+    pqueue.size--;
+    MaxHeapify(0);
+    return max;
+}
 
-// PQ IncreaseKeyPQ(PQ p, int x, int k)
-// {
-//     if(ValuePQ(p.p[x])>k)
-//     {
-//         printf("ERROR: new key smaller than previous");
-//         return p;
-//     }
-//     InsertValuePQ(&p.p[x],k);
-//     while(x>0&&ValuePQ(p.p[x/2])<ValuePQ(p.p[x]))
-//     {
-//         ExchangePQ(&p.p[x], &p.p[x/2]);
-//         x = x/2;
-//     }
-//     return p;
-// }
+int 
+GetPriority(int index)
+{
+    return pqueue.arr[index].k;
+}
 
+void 
+SetPriority(int index, int value)
+{
+    pqueue.arr[index].k = value;
+}
 
-// int ExtractMaxPQ(PQ *q)
-// {
-//     int max = ValuePQ(q->p[0]);
-//     q->p[0].k =  q->p[q->size-1].k;
-//     q->size--;
-//     MaxHeapify(q, 0);
-//     return max;
-// }
+int MaximumPQ()
+{
+    return pqueue.arr[0].k;
+}
 
-// void PrintPQ(PQ p)
-// {
-//     int i=0;
-//     printf("\nsize %d\n",p.size);
-//     while(i<p.size)
-//     {
-//         printf("%d ",ValuePQ(p.p[i]));
-//         i++;
-//     }
-// }
+void 
+PrintPQ()
+{
+    int i = 0;
+    printf("Printing Priority Queue of size %d\n",
+     pqueue.size);
+    while(i < pqueue.size){
+        printf("%d ", GetPriority(i));
+        i ++;
+    }
+    printf("\n");
+}
 
-
-// void ExchangePQ(priorityqueue *p,priorityqueue* q)
-// {
-//     /*pq * temp;
-//     temp = p;
-//     p = q;
-//     q = temp;*/
-//     printf("bp = %d bq = %d",(*p).k,(*q).k);
-//     priorityqueue *temp;
-//     *temp = *p;
-//     *p = *q;
-//     *q = *temp;
-//     printf("ap = %d aq = %d\n",(*p).k,(*q).k);
-// }
-
-// void InsertValuePQ(priorityqueue *p, int n)
-// {
-//     p->k = n;
-//     //printf("aa");
-// }
+/*  Not sending the pointers for 
+    the exchange as pqueue is global
+*/
+void 
+ExchangePQ(int a, int b)
+{
+    arrayNode temp;
+    temp = pqueue.arr[a];
+    pqueue.arr[a] = pqueue.arr[b];
+    pqueue.arr[b] = temp;
+    return ;
+}
 
 
 // PQ MinHeapify(PQ p, int i)
@@ -172,7 +184,7 @@ InsertPQ(void *data, int pri)
 // {
 //     PQ p = *q;
 //     int min = ValuePQ(p.p[0]);
-//     p.p[0].k =  p.p[p.size-1].k;
+    //     p.p[0) =  p.p[p.size-1);
 //     p.size--;
 //     p = MinHeapify(p, 0);
 //     *q = p;
