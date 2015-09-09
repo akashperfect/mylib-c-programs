@@ -8,10 +8,12 @@ int Dijkstra(int st)
     InitializeSingleSource(st);
     CreatePQofGraph();
     PrintPQData(printNode);
+    PrintArray(pqueue.pos, 10);
     while(pqueue.size > 0 )
     {
         u = *(int *)(ExtractMinPQ().data);
         PrintPQData(printNode);
+        PrintArray(pqueue.pos, 10);
         printf("u = %d\n", u);
         distVect[u] = g.list[u].d; // all logic needs 
     // //     //                 // to be applied here
@@ -21,10 +23,10 @@ int Dijkstra(int st)
             RelaxEdge(u, EdgeDest(curr), 
                 EdgeWeight(curr));
             curr = curr->next;
+            // break ;
         }
         PrintPQData(printNode);
         PrintGraph();
-        return;
         // PrintPQ();
         // return;
     }

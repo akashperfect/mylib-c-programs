@@ -27,10 +27,12 @@ CreatePQ(int size)
     int i;
     pqueue.arr = (arrayNode *)calloc(size, 
                     sizeof(struct arrayNode));
+    pqueue.pos = (int *)calloc(size, sizeof(int));
     pqueue.size = 0;
     for(i = 0; i < size; i ++){
         pqueue.arr[i].data = NULL;
         pqueue.arr[i].k = -1;
+        pqueue.pos[i] = -1;
     }
 }
 
@@ -113,6 +115,12 @@ void
 ExchangePQ(int a, int b)
 {
     arrayNode temp;
+    int pos;
+    pos = pqueue.pos[*(int *)pqueue.arr[a].data];
+    printf("a= %d b = %d pos = %d\n",a,b, pos);
+    pqueue.pos[*(int *)pqueue.arr[a].data] 
+            = pqueue.pos[*(int *)pqueue.arr[b].data];
+    pqueue.pos[*(int *)pqueue.arr[b].data] = pos;
     temp = pqueue.arr[a];
     pqueue.arr[a] = pqueue.arr[b];
     pqueue.arr[b] = temp;
@@ -156,6 +164,7 @@ void
 InsertMinPQ(void *data, int n)
 {
     pqueue.arr[pqueue.size].data = data;
+    pqueue.pos[*(int *)data] = pqueue.size;
     DecreaseKeyPQ(pqueue.size, n);
     pqueue.size ++;
 }
@@ -209,7 +218,7 @@ PrintPQData(void (*printValue)(void *))
     while(i < pqueue.size){
         printf("%d,", GetPriority(i));
         (*printValue)(pqueue.arr[i].data);
-        printf(" ");
+        printf(",%d  ", pqueue.pos[i]);
         i ++;
     }
     printf("\n");

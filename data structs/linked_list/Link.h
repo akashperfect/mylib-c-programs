@@ -45,6 +45,8 @@ typedef struct arrayNode
 typedef struct
 {
     arrayNode *arr;
+    int *pos; // store the current position of the element
+    int capacity;
     int size;
 }priorityQueue;
 

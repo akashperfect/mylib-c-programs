@@ -89,12 +89,13 @@ CreatePQofGraph()
 {
     int i = 1;
     CreatePQ(g.size);
-    while(i <= g.size){
+    while(i < g.size){
         int *node = (int *)calloc(1, sizeof(int));
         *node = i;
         InsertMinPQ(node, g.list[i].d);
         i ++;
     }
+    // pqueue.pos[g.size - 1] = 
 }
 
 void
@@ -231,7 +232,7 @@ RelaxEdge(int u, int v, int w)
     if(g.list[v].d > g.list[u].d + w)
     {
         g.list[v].d = g.list[u].d + w;
-        DecreaseKeyPQ(v, g.list[v].d);
+        DecreaseKeyPQ(pqueue.pos[v], g.list[v].d);
     }
 }
 
@@ -261,7 +262,7 @@ EdgeWeight(NODE temp)
     
 void printNode(void * data)
 {
-    printf("%d ", *(int *) data);
+    printf("%d", *(int *) data);
 }
 
 void
