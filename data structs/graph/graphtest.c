@@ -1,6 +1,3 @@
-#include<stdio.h>
-#include<stdlib.h>
-#include<string.h>
 #define MAXINT  2147483647
 #define MININT -2147483648
 

@@ -1,36 +1,52 @@
 #ifndef MSTPRIM_H_INCLUDED
 #define MSTPRIM_H_INCLUDED
+#include "Graphops.h"
 
-forest InserInForest(int u,int v, int wt)
+
+void
+InsertInForest(graph_edge* edge, int u, int v, int wt)
 {
-    edge e;
-    e.u=u;
-    e.v=v;
-    e.wt=wt;
-    return e;
+    edge->src = u;
+    edge->dest = v;
+    edge->wt = wt;
 }
 
-forest Prim(graph g, int **w)
+graph_edge * Prim()
 {
-    InitializeSingleSource(g,1);
-    PQ p = MakePQofGraph(g);
-    int u,v,index=0;
-    while(p.size>0)
+
+    int u, v, w, index = 0, t;
+    NODE curr;
+    graph_edge *forest;
+    forest = (graph_edge *)calloc(g.size + 1, sizeof(graph_edge));
+    InitializeSingleSource(1);
+    CreatePQofGraph();
+    while(pqueue.size > 0)
     {
-        u = ExtractMinPQ(&p);
+        u =  *(int *)(ExtractMinPQ().data);
         curr = g.list[u].top;
-        while(curr!=NULL)
+        while(curr != NULL)//curr != NULL)
         {
-            v = curr->s.num;
-            if(BelongsToPQ(p,v)&&w[u][v] < g.list[v].d)
+            v = EdgeDest(curr);
+            w = EdgeWeight(curr);
+            printf("u = %d, v = %d w = %d\n", u, v, w);
+            if(EdgeWeight(curr) < g.list[v].d)
             {
-                g.list[v].d = w[u][v];
-                A[index++] = InsertInForest(u,v,w[u][v]);
+                g.list[v].d = w;
+                printf("index = %d\n", index);
+                // InsertInForest(&forest[index++],u,v,w);
+                forest[index].src = u;
+                forest[index].dest = v;
+                forest[index].wt = w;
+                index ++;
             }
             curr = curr->next;
         }
+        // return forest;
     }
-    return A;
+    PrintArrayAny(forest, 10, printEdge);
+    for(t = 0; t < g.size; t ++)
+    printEdge(&forest[t]);
+    return forest;
 }
 
 

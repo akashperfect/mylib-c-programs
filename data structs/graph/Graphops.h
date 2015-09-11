@@ -4,7 +4,7 @@
 #include "../PriorityQueues.h"
 
 typedef struct{
-    int dest, wt;
+    int dest, src, wt;
 }graph_edge;
 
 typedef struct{
@@ -99,10 +99,11 @@ CreatePQofGraph()
 }
 
 void
-CreateEdge(graph_edge **e, int dest, int w)
+CreateEdge(graph_edge **e, int src, int dest, int w)
 {
     *e = (graph_edge *)malloc(sizeof(graph_edge));
     (*e)->dest = dest;
+    (*e)->src = src;
     (*e)->wt = w;
 }
 
@@ -159,8 +160,8 @@ AddEdgeW(int u, int v, int w)
 {
     //int ** we = (*w);
     graph_edge *e1, *e2;
-    CreateEdge(&e1, v, w);
-    CreateEdge(&e2, u, w);
+    CreateEdge(&e1, u, v, w);
+    CreateEdge(&e2, v, u, w);
     push(&g.list[u], e1);
     push(&g.list[v], e2);
 }
@@ -265,13 +266,30 @@ void printNode(void * data)
     printf("%d", *(int *) data);
 }
 
+void 
+printEdge(void * data)
+{
+    graph_edge *con = (graph_edge *)data;
+    printf("%d->%d,%d ", con->src,
+        con->dest, con->wt);
+}
+
+void
+PrintArrayAny(void *a, int size, void (*printEle)(void *))
+{
+    int i;
+    for (i = 0; i < size; ++i){
+        (*printEle)(a + i);  
+    }
+    printf("\n");
+}
+
 void
 PrintArray(int *a, int size)
 {
     int i;
-    for (i = 0; i < size; ++i)
-    {
-        printf("%d ", a[i]);   /* code */
+    for (i = 0; i < size; ++i){
+        printf("%d ", a[i]);  
     }
     printf("\n");
 }

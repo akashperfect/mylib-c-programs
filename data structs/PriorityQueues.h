@@ -117,7 +117,6 @@ ExchangePQ(int a, int b)
     arrayNode temp;
     int pos;
     pos = pqueue.pos[*(int *)pqueue.arr[a].data];
-    printf("a= %d b = %d pos = %d\n",a,b, pos);
     pqueue.pos[*(int *)pqueue.arr[a].data] 
             = pqueue.pos[*(int *)pqueue.arr[b].data];
     pqueue.pos[*(int *)pqueue.arr[b].data] = pos;
