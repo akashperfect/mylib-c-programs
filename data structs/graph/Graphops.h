@@ -257,6 +257,19 @@ EdgeWeight(NODE temp)
     return ((graph_edge *) temp->data)->wt;
 }
 
+void
+DeleteGraph(graph *g)
+{
+    int i = 0;
+    while(i <= g->size)
+    {
+        DeleteStack(&(g->list[i]));
+        i++;
+    }
+    g->size = 0;
+    // free(g);
+}
+
 /*  Makes a priority queue of 
     all the graph edges
 */

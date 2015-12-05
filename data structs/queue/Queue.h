@@ -50,6 +50,14 @@ void * QueueTop(queue q)
     return GetData(q.front);
 }
 
+void
+DeleteQueue(queue *q)
+{
+    while(q->front != NULL){
+        Dequeue(q);
+    }
+}
+
 void PrintQueue(queue q)
 {
     NODE pr = q.front;

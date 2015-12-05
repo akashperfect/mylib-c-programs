@@ -28,24 +28,35 @@ push(stack *s, void* val)
     return ;
 }
 
-void* 
+void * 
 pop(stack *s)
 {
+    void *ret_data = NULL;
     NODE temp;
     temp = s->top;
-    if(s->top ==NULL)
+    if(s->top == NULL)
     {
         printf("Error - NULL STACK");
         exit(0);
     }
     s->top = s->top->next;
     s->size--;
-    return temp->data;
+    ret_data = temp->data;
+    free(temp);
+    return ret_data;
 }
 
 void* top(stack *s)
 {
     return s->top->data;
+}
+
+void
+DeleteStack(stack *s)
+{
+    while(s->top != NULL){
+        pop(s);
+    }
 }
 
 int

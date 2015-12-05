@@ -31,12 +31,16 @@ void BFS(graph g)
             if(visit[Value(fr)] != 1)
             {
                 Enqueue(&q, temp->data);
+                free(temp);
                 visit[Value(fr)] = 1;
             }
             fr = fr->next;
         }
         Dequeue(&q);
     }
+    free(visit);
+    free(fr);
+    DeleteQueue(&q);
     return;
 }
 
@@ -47,5 +51,6 @@ int main(void)
     CreateSampleGraph();
     PrintGraph(g);
     BFS(g);
+    DeleteGraph(&g);
 }
 
