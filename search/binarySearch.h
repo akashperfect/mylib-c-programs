@@ -8,14 +8,11 @@ binarySearch(int *a, int low, int high, int search) {
 		return -1;
 	}
 	mid = (high + low) / 2;
-	if (a[mid] == search) {
-		return mid;
-	}
-	else if (a[mid] < search){
+	if (a[mid] < search){
 		return binarySearch(a, mid + 1, high, search);
 	}
 	else if (a[mid] > search){
 		return binarySearch(a, low, mid - 1 , search);
 	}
-	return -1;
+	return mid;
 }
