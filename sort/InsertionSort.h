@@ -1,6 +1,16 @@
 #ifndef INSERTIONSORT_H_INCLUDED
 #define INSERTIONSORT_H_INCLUDED
 
+void AddElement(int *a, int i, int e)
+{
+    while(i >= 0 && a[i] > e)         // for shifting of elements greater than 'e' and index value less than 'j'
+    {
+        a[i+1] = a[i];
+        i--;
+    }
+    a[i+1] = e;                       // finally placing the element in its right place
+}
+
 void InsertionSort(int *a,int size)
 {
     int j,e,i;
@@ -11,12 +21,7 @@ void InsertionSort(int *a,int size)
     {
         e = a[j];                         // e is assigned the value at 'j'th index
         i = j - 1;
-        while(i >= 0 && a[i] > e)         // for shifting of elements greater than 'e' and index value less than 'j'
-        {
-            a[i+1] = a[i];
-            i--;
-        }
-        a[i+1] = e;                       // finally placing the element in its right place
+        addElement(a, i, e);
     }
 }
 
