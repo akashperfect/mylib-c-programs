@@ -158,11 +158,10 @@ NODE FindElementHashTable(int k)
     }
     else
     {
-        printf("ERROR: Element Not Found");
-        exit(0);
+        printf("ERROR: Element Not Found\n");
     }
+ 
     return NULL;
-
 }
 
 void PrintHashTable()
