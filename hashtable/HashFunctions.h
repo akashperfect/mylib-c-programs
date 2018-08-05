@@ -4,7 +4,7 @@
 
 int MultiplicationHash(int k, int n)
 {
-    double ka = (double)k*(sqrt(5)-1.0)/2.0;
+    double ka = (double)abs(k) * (sqrt(5)-1.0)/2.0;
     int ika = ka;
     return n*(ka-ika);
 }
